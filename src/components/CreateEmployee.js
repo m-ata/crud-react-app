@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Typography, Button, Container, Grid } from '@material-ui/core';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateEmployee = () => {
 
@@ -24,9 +26,11 @@ const CreateEmployee = () => {
         }).then(
             res => {
                 console.log(res);
+                toast.success('Employee added successfully')
             }
         ).catch(err => {
             console.log(err);
+            toast.error('There is something went wrong while adding employee');
         })
     }
 
@@ -54,6 +58,7 @@ const CreateEmployee = () => {
                     <Button color={'primary'} variant={'contained'} onClick={add} >Add</Button>
                 </Typography>
             </Grid>
+            <ToastContainer />
         </Container>
     )
 }
