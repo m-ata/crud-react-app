@@ -24,8 +24,9 @@ const CreateEmployee = () => {
             data: data
         }).then(
             res => {
-                console.log(res);
-                toast.success('Employee added successfully')
+                if(res.status === 200 && res.data.data.length > 0 ) {
+                    toast.success(res.data.msg);
+                }
             }
         ).catch(err => {
             console.log(err);

@@ -30,13 +30,12 @@ const Employees = (props) => {
 
     const handleDelete = (id) => {
         axios({
-            url: `http://dummy.restapiexample.com/api/v1/delete/${id}`,
+            url: `http://localhost:4000/delete/${id}`,
             method: 'delete',
         }).then(
             res => {
-                debugger;
-                if (res.data) {
-                    toast.success(res.data.message)
+                if(res.status === 200 && res.data.data.length > 0 ) {
+                    toast.success(res.data.msg);
                 }
             }
         ).catch(err => {
