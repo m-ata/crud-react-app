@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from "@material-ui/icons/Delete";
+import BorderColorSharpIcon from '@material-ui/icons/BorderColorSharp';
 import IconButton from '@material-ui/core/IconButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -51,6 +52,7 @@ const Employees = (props) => {
                         <TableCell>Name</TableCell>
                         <TableCell>Salary</TableCell>
                         <TableCell >Age</TableCell>
+                        <TableCell >Update</TableCell>
                         <TableCell >Delete</TableCell>
                     </TableRow>
                 </TableHead>
@@ -61,6 +63,13 @@ const Employees = (props) => {
                                 <TableCell>{value.name}</TableCell>
                                 <TableCell >{value.salary}</TableCell>
                                 <TableCell>{value.age}</TableCell>
+                                <TableCell>
+                                    <IconButton
+                                        // onClick={() => handleDelete(Number(value.id))}
+                                    >
+                                        <BorderColorSharpIcon />
+                                    </IconButton>
+                                </TableCell>
                                 <TableCell>
                                     <IconButton
                                         onClick={() => handleDelete(Number(value.id))}
