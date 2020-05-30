@@ -53,15 +53,22 @@ app.get('/employees', (req, res) => {
 
 app.delete('/delete/:id', (req, res) => {
     const employee = employees.find(emp => emp.id === Number(req.params.id));
-    console.log(employee);
     const index = employees.indexOf(employee);
-    console.log(index);
     employees.splice(index, 1);
-    console.log(employees);
     res.json({
         data: employees,
         msg: 'Employee deleted successfully'
     });
 });
+
+app.put('/update/:id', (req, res) => {
+    const employee = employees.find(emp => emp.id === Number(req.params.id));
+    const index = employees.indexOf(employee);
+    employees[index] = req.body;
+    res.json({
+        data: employees[index],
+        msg: 'Employee updated successfully'
+    });
+})
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
