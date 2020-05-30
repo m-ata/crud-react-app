@@ -32,7 +32,9 @@ const Employees = () => {
     const [name, setName] = useState('');
     const [salary, setSalary] = useState('');
     const [age, setAge] = useState('');
+    const [ID, setID]= useState('');
     const [fetchData, setFetchData] = useState(true);
+    const [buttonText, setButtonText] = useState('Add')
 
     const classes = useStyles();
 
@@ -70,7 +72,7 @@ const Employees = () => {
         })
     }
 
-    const add = () => {
+    const handleAdd = () => {
         const data = {
             name: name,
             salary: salary,
@@ -99,6 +101,42 @@ const Employees = () => {
         setName('');
         setAge('');
         setSalary('');
+        setID('');
+        setButtonText('Add');
+    }
+
+    const handleSetValue = (emp) => {
+        setName(emp.name);
+        setSalary(emp.salary);
+        setAge(emp.age);
+        setID(emp.id);
+        setButtonText('Update');
+    }
+
+    const handleUpdate = () => {
+        const data = {
+            id: ID,
+            name: name,
+            salary: salary,
+            age: age
+        }
+        setFetchData(false);
+        axios({
+            url: `http://localhost:4000/update/${ID}`,
+            method: 'put',
+            data: data
+        }).then(
+            res => {
+                if (res.status === 200 && res.data.data) {
+                    setFetchData(true);
+                    initForm();
+                    toast.success(res.data.msg);
+                }
+            }
+        ).catch(err => {
+            console.log(err);
+            toast.error('There is something went wrong while adding employee');
+        })
     }
 
     return (
@@ -121,7 +159,12 @@ const Employees = () => {
                 </Grid>
                 <Grid item xs={3}>
                     <Typography component={'div'} >
-                        <Button color={'primary'} variant={'contained'} onClick={add} >Add</Button>
+                        <Button 
+                            color={'primary'} 
+                            variant={'contained'} 
+                            onClick={buttonText.toLowerCase() === 'add' ? () => handleAdd() : () => handleUpdate()} >
+                            {buttonText}
+                        </Button>
                     </Typography>
                 </Grid>
             </Grid>
@@ -146,7 +189,7 @@ const Employees = () => {
                                         <TableCell>{value.age}</TableCell>
                                         <TableCell>
                                             <IconButton
-                                            // onClick={() => handleDelete(Number(value.id))}
+                                            onClick={() => handleSetValue(value)}
                                             >
                                                 <BorderColorSharpIcon />
                                             </IconButton>
