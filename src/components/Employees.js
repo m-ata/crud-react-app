@@ -20,26 +20,13 @@ const useStyles = makeStyles({
     },
 });
 
-const Employees = () => {
+const Employees = (props) => {
 
-    const [data, setData] = useState([]);
+    const {
+        data
+    } = props;
+
     const classes = useStyles();
-
-    useEffect(() => {
-        axios({
-            url: 'http://dummy.restapiexample.com/api/v1/employees',
-            method: 'get',
-        }).then(
-            res => {
-                if (res.data && res.data.data.length > 0) {
-                    setData(res.data.data);
-                    console.log(res.data.data);
-                }
-            }
-        ).catch(err => {
-            console.log(err);
-        })
-    }, []);
 
     const handleDelete = (id) => {
         axios({
@@ -69,20 +56,22 @@ const Employees = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((value) => (
-                        <TableRow key={value.id}>
-                            <TableCell>{value.employee_name}</TableCell>
-                            <TableCell >{value.employee_salary}</TableCell>
-                            <TableCell>{value.employee_age}</TableCell>
-                            <TableCell>
-                                <IconButton
-                                    onClick={() => handleDelete(Number(value.id))}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {
+                        data && data.map((value) => (
+                            <TableRow key={value.id}>
+                                <TableCell>{value.name}</TableCell>
+                                <TableCell >{value.salary}</TableCell>
+                                <TableCell>{value.age}</TableCell>
+                                <TableCell>
+                                    <IconButton
+                                        onClick={() => handleDelete(Number(value.id))}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
                 </TableBody>
             </Table>
         </TableContainer>

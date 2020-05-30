@@ -18,9 +18,8 @@ const CreateEmployee = () => {
             salary: salary,
             age: age
         }
-        console.log(data);
         axios({
-            url: 'http://dummy.restapiexample.com/api/v1/create',
+            url: 'http://localhost:4000/create',
             method: 'post',
             data: data
         }).then(
